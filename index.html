@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English UTC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>English UTC</h1>
+      <div class="auth">
+        <button onclick="showAuth('login')">Đăng nhập</button>
+        <button onclick="showAuth('register')">Đăng ký</button>
+      </div>
+    </div>
+    <nav>
+      <button onclick="openTab('vocab')" class="active">📚 Từ vựng</button>
+      <button onclick="openTab('listening')">🎧 Nghe & Nói</button>
+      <button onclick="openTab('writing')">✍️ Viết</button>
+      <button onclick="openTab('reading')">📖 Đọc hiểu</button>
+      <button onclick="openTab('exam')">📝 Thi thử</button>
+      <button onclick="openTab('chatbot')">🤖 Chatbot</button>
+      <button onclick="openTab('progress')">📊 Tiến độ</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="slideshow-section">
+      <div class="slideshow-container">
+        <div class="slide fade">
+          <img src="images/slide1.jpg" class="slide-img" alt="Slide 1">
+        </div>
+        <div class="slide fade">
+          <img src="images/slide2.png" class="slide-img" alt="Slide 2">
+        </div>
+        <div class="slide fade">
+          <img src="images/slide3.webp" class="slide-img" alt="Slide 3">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="content">
+        <!-- Học từ vựng -->
+        <div id="vocab" class="tab active">
+          <div class="card">
+            <h2>Từ vựng hôm nay</h2>
+            <p><b>Apple</b> → Quả táo</p>
+            <button class="action">🔊 Nghe phát âm</button>
+            <button class="action">⭐ Lưu từ</button>
+          </div>
+        </div>
+
+        <!-- Luyện nghe & nói -->
+        <div id="listening" class="tab">
+          <div class="card">
+            <h2>Bài nghe</h2>
+            <audio controls>
+              <source src="audio/lesson1.mp3" type="audio/mpeg">
+            </audio>
+            <button class="action">🎤 Ghi âm phát âm</button>
+          </div>
+        </div>
+
+        <!-- Luyện viết -->
+        <div id="writing" class="tab">
+          <div class="card">
+            <h2>Bài viết</h2>
+            <textarea rows="5" style="width:100%"></textarea>
+            <button class="action">✅ Kiểm tra lỗi ngữ pháp</button>
+          </div>
+        </div>
+
+        <!-- Luyện đọc hiểu -->
+        <div id="reading" class="tab">
+          <div class="card">
+            <h2>Bài đọc</h2>
+            <p>Lorem ipsum dolor sit amet...</p>
+            <button class="action">❓ Tạo câu hỏi trắc nghiệm</button>
+          </div>
+        </div>
+
+        <!-- Kiểm tra & thi thử -->
+        <div id="exam" class="tab">
+          <div class="card">
+            <h2>Bài thi</h2>
+            <p>1. What is the meaning of "Dog"?</p>
+            <button class="action">A. Con mèo</button>
+            <button class="action">B. Con chó</button>
+            <button class="action">C. Con gà</button>
+          </div>
+        </div>
+
+        <!-- Chatbot -->
+        <div id="chatbot" class="tab">
+          <div class="card">
+            <h2>Chatbot hội thoại</h2>
+            <div id="chatbox" class="chatbox">
+              <p><b>Bot:</b> Hello! How are you?</p>
+            </div>
+            <div class="chat-input-row">
+              <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+              <button class="action" onclick="sendMessage()">Gửi</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tiến độ -->
+        <div id="progress" class="tab">
+          <div class="card">
+            <h2>Tiến độ học tập</h2>
+            <div class="progress-row">
+              <div>
+                <span>Học từ vựng</span>
+                <progress value="70" max="100"></progress>
+                <span>70%</span>
+              </div>
+              <div>
+                <span>Luyện nghe</span>
+                <progress value="50" max="100"></progress>
+                <span>50%</span>
+              </div>
+              <div>
+                <span>Luyện viết</span>
+                <progress value="30" max="100"></progress>
+                <span>30%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal đăng nhập/đăng ký -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAuth()">&times;</span>
+      <div id="loginForm" style="display:none;">
+        <h2>Đăng nhập</h2>
+        <input type="text" id="loginUser" placeholder="Tên đăng nhập"><br>
+        <input type="password" id="loginPass" placeholder="Mật khẩu"><br>
+        <button onclick="login()">Đăng nhập</button>
+      </div>
+      <div id="registerForm" style="display:none;">
+        <h2>Đăng ký</h2>
+        <input type="text" id="regUser" placeholder="Tên đăng nhập"><br>
+        <input type="password" id="regPass" placeholder="Mật khẩu"><br>
+        <button onclick="register()">Đăng ký</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p><b>Liên hệ:</b></p>
+      <p>Email: UTC@hoctienganh.com</p>
+      <p>Hotline: 0123 456 789</p>
+      <p>Địa chỉ: Đại học giao thông vận tải</p>
+      <p>&copy;Ứng dụng học ngoại ngữ thông minh</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
