@@ -11,6 +11,7 @@
     <div class="header-container">
       <h1>English UTC</h1>
       <div class="auth">
+        <!-- Gọi showAuth(type) -->
         <button onclick="showAuth('login')">Đăng nhập</button>
         <button onclick="showAuth('register')">Đăng ký</button>
       </div>
@@ -45,57 +46,68 @@
 
     <section class="content-section">
       <div class="content">
-        <!-- Học từ vựng -->
+        <!-- TAB TỪ VỰNG -->
         <div id="vocab" class="tab active">
           <div class="card">
             <h2>Từ vựng hôm nay</h2>
-            <p><b>Apple</b> → Quả táo</p>
-            <button class="action">🔊 Nghe phát âm</button>
-            <button class="action">⭐ Lưu từ</button>
+            <p><b id="vocabWord">Apple</b> → Quả táo</p>
+            <!-- Gọi playAudio(word) và saveWord(word) với từ mẫu -->
+            <button class="action" onclick="playAudio(document.getElementById('vocabWord').textContent)">🔊 Nghe phát âm</button>
+            <button class="action" onclick="saveWord(document.getElementById('vocabWord').textContent)">⭐ Lưu từ</button>
+            <br><br>
+            <input type="text" id="customWord" placeholder="Nhập từ mới...">
+            <!-- Gọi playAudio(word) và saveWord(word) với từ nhập -->
+            <button class="action" onclick="playAudio(document.getElementById('customWord').value)">🔊 Nghe phát âm từ nhập</button>
+            <button class="action" onclick="saveWord(document.getElementById('customWord').value)">⭐ Lưu từ nhập</button>
           </div>
         </div>
 
-        <!-- Luyện nghe & nói -->
+        <!-- TAB NGHE & NÓI -->
         <div id="listening" class="tab">
           <div class="card">
-            <h2>Bài nghe</h2>
+            <h2>Bài nghe & Nói</h2>
             <audio controls>
               <source src="audio/lesson1.mp3" type="audio/mpeg">
             </audio>
-            <button class="action">🎤 Ghi âm phát âm</button>
+            <br>
+            <!-- Gọi recordSpeech() -->
+            <button class="action" onclick="recordSpeech()">🎤 Ghi âm phát âm</button>
           </div>
         </div>
 
-        <!-- Luyện viết -->
+        <!-- TAB VIẾT -->
         <div id="writing" class="tab">
           <div class="card">
             <h2>Bài viết</h2>
-            <textarea rows="5" style="width:100%"></textarea>
-            <button class="action">✅ Kiểm tra lỗi ngữ pháp</button>
+            <textarea id="writingText" rows="5" style="width:100%" placeholder="Nhập đoạn văn cần kiểm tra..."></textarea>
+            <!-- Gọi checkGrammar() -->
+            <button class="action" onclick="checkGrammar()">✅ Kiểm tra lỗi ngữ pháp</button>
           </div>
         </div>
 
-        <!-- Luyện đọc hiểu -->
+        <!-- TAB ĐỌC HIỂU -->
         <div id="reading" class="tab">
           <div class="card">
             <h2>Bài đọc</h2>
-            <p>Lorem ipsum dolor sit amet...</p>
-            <button class="action">❓ Tạo câu hỏi trắc nghiệm</button>
+            <textarea id="readingText" rows="5" style="width:100%" placeholder="Nhập đoạn văn để sinh câu hỏi..."></textarea>
+            <!-- Gọi generateQuestions() -->
+            <button class="action" onclick="generateQuestions()">❓ Tạo câu hỏi trắc nghiệm</button>
           </div>
         </div>
 
-        <!-- Kiểm tra & thi thử -->
+        <!-- TAB THI THỬ -->
         <div id="exam" class="tab">
           <div class="card">
             <h2>Bài thi</h2>
-            <p>1. What is the meaning of "Dog"?</p>
-            <button class="action">A. Con mèo</button>
-            <button class="action">B. Con chó</button>
-            <button class="action">C. Con gà</button>
+            <p id="examQuestion">1. What is the meaning of "Dog"?</p>
+            <!-- Gọi submitAnswer(answer) với từng đáp án -->
+            <button class="action" onclick="submitAnswer('A')">A. Con mèo</button>
+            <button class="action" onclick="submitAnswer('B')">B. Con chó</button>
+            <button class="action" onclick="submitAnswer('C')">C. Con gà</button>
           </div>
         </div>
 
-        <!-- Chatbot -->
+        <!-- TAB CHATBOT -->
         <div id="chatbot" class="tab">
           <div class="card">
             <h2>Chatbot hội thoại</h2>
@@ -104,16 +116,19 @@
             </div>
             <div class="chat-input-row">
               <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+              <!-- Gọi sendMessage() -->
               <button class="action" onclick="sendMessage()">Gửi</button>
             </div>
           </div>
         </div>
 
-        <!-- Tiến độ -->
+        <!-- TAB TIẾN ĐỘ -->
         <div id="progress" class="tab">
           <div class="card">
             <h2>Tiến độ học tập</h2>
-            <div class="progress-row">
+            <!-- Gọi loadProgress() -->
+            <button class="action" onclick="loadProgress()">🔄 Tải tiến độ</button>
+            <div class="progress-row" style="margin-top:16px;">
               <div>
                 <span>Học từ vựng</span>
                 <progress value="70" max="100"></progress>
@@ -139,17 +154,20 @@
   <!-- Modal đăng nhập/đăng ký -->
   <div id="authModal" class="modal">
     <div class="modal-content">
+      <!-- Gọi closeAuth() -->
       <span class="close" onclick="closeAuth()">&times;</span>
       <div id="loginForm" style="display:none;">
         <h2>Đăng nhập</h2>
         <input type="text" id="loginUser" placeholder="Tên đăng nhập"><br>
         <input type="password" id="loginPass" placeholder="Mật khẩu"><br>
+        <!-- Gọi login() -->
         <button onclick="login()">Đăng nhập</button>
       </div>
       <div id="registerForm" style="display:none;">
         <h2>Đăng ký</h2>
         <input type="text" id="regUser" placeholder="Tên đăng nhập"><br>
         <input type="password" id="regPass" placeholder="Mật khẩu"><br>
+        <!-- Gọi register() -->
         <button onclick="register()">Đăng ký</button>
       </div>
     </div>
