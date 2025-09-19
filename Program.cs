@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Project1.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add services to the container.
+builder.Services.AddDbContext<WebTaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WebTaDatabase")));
 
 var app = builder.Build();
 
