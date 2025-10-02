@@ -22,8 +22,8 @@ namespace Project1.Controllers
         // For demo, use a fixed user ID. Replace with actual authentication.
         private int GetUserId() => 2;
 
-        [HttpGet]
-        public async Task<ActionResult<ApiResponse<List<TuVungVM>>>> GetUserFlashcards()
+        [HttpGet("all")]
+        public async Task<ActionResult<ApiResponse<List<TuVungVM>>>> GetAllUserFlashcards()
         {
             var userId = GetUserId();
             var flashcards = await _context.NguoiDungTuVungs
@@ -34,7 +34,8 @@ namespace Project1.Controllers
                     MaTu = (int)x.MaTu,
                     Tu = x.MaTuNavigation.Tu,
                     Nghia = x.MaTuNavigation.Nghia,
-                    HinhAnh = x.MaTuNavigation.DuongDanAnh
+                    HinhAnh = x.MaTuNavigation.DuongDanAnh,
+                    ViDu = x.MaTuNavigation.ViDu
                 })
                 .ToListAsync();
 
@@ -42,6 +43,34 @@ namespace Project1.Controllers
             {
                 Success = true,
                 Data = flashcards
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse<ApiPagedResponse<TuVungVM>>>> GetPagedUserFlashcards([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var userId = GetUserId();
+            var query = _context.NguoiDungTuVungs
+                .Where(x => x.MaNguoiDung == userId)
+                .Include(x => x.MaTuNavigation)
+                .Select(x => new TuVungVM
+                {
+                    MaTu = (int)x.MaTu,
+                    Tu = x.MaTuNavigation.Tu,
+                    Nghia = x.MaTuNavigation.Nghia,
+                    HinhAnh = x.MaTuNavigation.DuongDanAnh,
+                    ViDu = x.MaTuNavigation.ViDu // <-- ADD THIS LINE
+                });
+
+            var totalCount = await query.CountAsync();
+            var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            var pagedData = new ApiPagedResponse<TuVungVM>(items, totalCount, page, pageSize);
+
+            return Ok(new ApiResponse<ApiPagedResponse<TuVungVM>>
+            {
+                Success = true,
+                Data = pagedData
             });
         }
 
@@ -67,7 +96,8 @@ namespace Project1.Controllers
                 MaTu = (int)ndtv.MaTu,
                 Tu = ndtv.MaTuNavigation.Tu,
                 Nghia = ndtv.MaTuNavigation.Nghia,
-                HinhAnh = ndtv.MaTuNavigation.DuongDanAnh
+                HinhAnh = ndtv.MaTuNavigation.DuongDanAnh,
+                ViDu = ndtv.MaTuNavigation.ViDu
             };
 
             return Ok(new ApiResponse<TuVungVM>
@@ -117,7 +147,8 @@ namespace Project1.Controllers
                 MaTu = tuVung.MaTu,
                 Tu = tuVung.Tu,
                 Nghia = tuVung.Nghia,
-                HinhAnh = tuVung.DuongDanAnh
+                HinhAnh = tuVung.DuongDanAnh,
+                ViDu = tuVung.ViDu
             };
 
             return Ok(new ApiResponse<TuVungVM>

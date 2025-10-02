@@ -13,13 +13,13 @@ namespace Project1.Services
         public FlashcardsService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _baseApiUrl = configuration["ApiBaseUrl"] ?? "https://localhost:5000/api"; // Configure in appsettings.json
+            _baseApiUrl = configuration["ApiBaseUrl"] ?? "https://localhost:7290/api"; // Configure in appsettings.json
             _httpClient.BaseAddress = new Uri(_baseApiUrl);
         }
 
-        public async Task<List<TuVungVM>> GetUserFlashcardsAsync()
+        public async Task<List<TuVungVM>> GetAllUserFlashcardsAsync()
         {
-            var response = await _httpClient.GetFromJsonAsync<ApiResponse<List<TuVungVM>>>("/api/FlashcardsAPI");
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<List<TuVungVM>>>("/api/FlashcardsAPI/all");
             return response?.Data ?? new List<TuVungVM>();
         }
 

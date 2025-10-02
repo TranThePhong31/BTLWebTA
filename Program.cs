@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Project1.Models;
+using Project1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,16 @@ builder.Services.AddControllersWithViews();
 // Add services to the container.
 builder.Services.AddDbContext<WebTaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebTaDatabase")));
+
+builder.Services.AddScoped<FlashcardsService>();
+builder.Services.AddHttpClient<FlashcardsService>();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -26,6 +37,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
