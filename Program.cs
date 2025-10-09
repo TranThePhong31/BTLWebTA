@@ -11,8 +11,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<WebTaContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebTaDatabase")));
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddScoped<FlashcardsService>();
 builder.Services.AddHttpClient<FlashcardsService>();
+
+builder.Services.AddScoped<ChatbotApiService>();
+builder.Services.AddHttpClient<ChatbotApiService>();
 
 builder.Services.AddSession(options =>
 {
