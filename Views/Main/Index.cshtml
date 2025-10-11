@@ -17,50 +17,248 @@
         <!-- 🟢 TAB 1: TỪ VỰNG -->
         <div id="vocab" class="tab active">
             <div class="card">
-                <h2>Từ vựng hôm nay</h2>
-                <p><b id="vocabWord">Apple</b> → Quả táo</p>
+                <h2>Flashcards của tôi</h2>
 
-                <button class="action" onclick="playAudio(document.getElementById('vocabWord').textContent)">🔊 Nghe phát âm</button>
-                <button class="action" onclick="saveWord(document.getElementById('vocabWord').textContent)">⭐ Lưu từ</button>
+                <!-- Flashcard Management -->
+                <div class="flashcards-management">
+                    <button class="action" onclick="loadFlashcards(1)">🔄 Tải Flashcards</button>
+                    <button class="action" onclick="startPractice()">📚 Bắt đầu luyện tập</button>
 
-                <br><br>
+                    <!-- Page Size Selector -->
+                    <div class="page-size-selector" style="display: inline-block; margin-left: 15px;">
+                        <label for="pageSize">Hiển thị:</label>
+                        <select id="pageSize" onchange="changePageSize(this.value)" style="margin-left: 5px; padding: 5px;">
+                            <option value="10">10 thẻ</option>
+                            <option value="20">20 thẻ</option>
+                            <option value="50">50 thẻ</option>
+                            <option value="100">100 thẻ</option>
+                        </select>
+                    </div>
+                </div>
 
-                <input type="text" id="customWord" placeholder="Nhập từ mới...">
-                <button class="action" onclick="playAudio(document.getElementById('customWord').value)">🔊 Nghe phát âm từ nhập</button>
-                <button class="action" onclick="saveWord(document.getElementById('customWord').value)">⭐ Lưu từ nhập</button>
+                <!-- Flashcards Grid -->
+                <div id="flashcardsGrid" class="flashcards-grid" style="display: none; margin-top: 20px;">
+                    <!-- Flashcards will be loaded here -->
+                </div>
+
+                <!-- Pagination Container will be inserted here by JavaScript -->
+                <!-- Practice Section -->
+                <div id="practiceSection" style="display: none; margin-top: 20px;">
+                    <div class="practice-container">
+                        <!-- Progress Bar -->
+                        <div class="progress-section">
+                            <div class="progress">
+                                <div id="practiceProgress" class="progress-bar" style="width: 0%"></div>
+                            </div>
+                            <div id="progressText" class="progress-text">0/0</div>
+                        </div>
+
+                        <!-- Flashcard Review -->
+                        <div id="flashcardReview" class="flashcard-review" style="display: none;">
+                            <div class="flashcard">
+                                <h2 id="practiceWord" class="word"></h2>
+                                <p id="practiceMeaning" class="meaning" style="display: none;"></p>
+                                <img id="practiceImage" class="word-image" style="display: none; max-width: 200px; margin: 10px auto;" />
+                            </div>
+
+                            <div class="difficulty-buttons">
+                                <h4>Đánh giá độ khó:</h4>
+                                <div class="button-group">
+                                    <button class="action btn-success" onclick="submitDifficulty('Easy')">Dễ</button>
+                                    <button class="action btn-warning" onclick="submitDifficulty('Medium')">Trung bình</button>
+                                    <button class="action btn-danger" onclick="submitDifficulty('Hard')">Khó</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exercise Section -->
+                        <div id="exerciseSection" class="exercise-section" style="display: none;">
+                            <!-- Multiple Choice Exercise -->
+                            <div id="multipleChoiceExercise" style="display: none;">
+                                <h4>Chọn nghĩa đúng của từ: "<strong id="mcWord"></strong>"</h4>
+                                <div id="choicesContainer" class="choices-container"></div>
+                                <button class="action" onclick="submitExerciseAnswer()" style="margin-top: 10px;">Kiểm tra</button>
+                            </div>
+
+                            <!-- Fill in Blank Exercise -->
+                            <div id="fillBlankExercise" style="display: none;">
+                                <h4>Điền từ vào chỗ trống:</h4>
+                                <p id="fillMeaning" class="meaning"></p>
+                                <p id="fillExample" class="example-sentence"></p>
+                                <input type="text" id="fillAnswer" placeholder="Điền từ vào chỗ trống..."
+                                       class="form-control" style="margin: 10px 0;" />
+                                <button class="action" onclick="submitFillAnswer()">Kiểm tra</button>
+                            </div>
+                        </div>
+
+                        <!-- Add this after the exercise sections but before practiceComplete -->
+                        <div id="exerciseFeedback" style="display: none; margin-top: 15px; padding: 10px; border-radius: 5px;">
+                            <div id="feedbackMessage"></div>
+                            <button id="nextExerciseBtn" class="action" onclick="nextAfterFeedback()" style="margin-top: 10px; display: none;">
+                                Tiếp tục
+                            </button>
+                            <button id="retryExerciseBtn" class="action" onclick="retryExercise()" style="margin-top: 10px; display: none;">
+                                Thử lại
+                            </button>
+                        </div>
+
+                        <!-- Practice Complete -->
+                        <div id="practiceComplete" style="display: none; text-align: center;">
+                            <h3>🎉 Hoàn thành luyện tập!</h3>
+                            <div id="practiceSummary"></div>
+                            <button class="action" onclick="resetPractice()">Luyện tập lại</button>
+                        </div>
+
+                        <!-- Add retry section at the end -->
+                        <div id="retrySection" style="display: none; margin-top: 20px;">
+                            <h3>🔁 Ôn tập lại các từ chưa đúng</h3>
+                            <div id="retryWordsList"></div>
+                            <button class="action" onclick="startRetrySession()">Bắt đầu ôn tập</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyFlashcards" class="empty-state" style="display: none; text-align: center; margin-top: 20px;">
+                    <p>Chưa có flashcard nào. Hãy thêm từ mới để bắt đầu học!</p>
+                </div>
+
             </div>
         </div>
 
         <!-- TAB NGHE & NÓI -->
         <div id="listening" class="tab">
-            <div class="card">
-                <h2>Bài nghe & Nói</h2>
+            <div class="card listening-card">
+                <h2 class="title">🎧 Bài nghe & Nói</h2>
 
-                <!-- Bài nghe mẫu -->
-                <audio controls>
-                    <source src="audio/lesson1.mp3" type="audio/mpeg">
-                </audio>
-                <br><br>
-
-                <div style="margin-top:15px;">
+                <!-- Hiển thị từ cần phát âm -->
+                <div class="word-section">
                     <h3>🔤 Hãy phát âm từ sau:</h3>
-                    <div id="randomWord" style="font-size:28px;font-weight:bold;color:#007bff;">(Đang tải...)</div>
-                    <button class="action" id="newWordBtn">🎲 Lấy từ mới</button>
+                    <div id="randomWord" class="word-box">@ViewBag.Word</div>
+                    <input type="hidden" name="referenceText" value="@ViewBag.Word" />
+
+                    <button class="action-btn" id="newWordBtn" data-url="/Speech/Index">🎲 Lấy từ mới</button>
                 </div>
 
                 <!-- Ghi âm -->
-                <button class="action" id="startRecordingBtn">🎤 Bắt đầu ghi âm</button>
-                <button class="action" id="stopRecordingBtn" disabled>⏹️ Dừng ghi âm</button>
-                <br><br>
+                <div class="record-section">
+                    <button class="action-btn start" id="startRecordingBtn">🎤 Bắt đầu ghi âm</button>
+                    <button class="action-btn stop" id="stopRecordingBtn" disabled>⏹️ Dừng ghi âm</button>
+                </div>
 
                 <!-- Nghe lại bản ghi -->
-                <audio id="audioPlayer" controls style="display:none;"></audio>
+                <audio id="audioPlayer" controls style="display:none; margin-top:15px; width:100%;"></audio>
 
-                <!-- Hiển thị kết quả chấm điểm -->
-                <div id="speechResult" style="margin-top:10px;"></div>
-                <div id="speechStatus" style="margin-top:5px;color:gray;"></div>
+                <!-- Hiển thị kết quả -->
+                <div id="speechResult" class="result-box"></div>
+                <div id="speechStatus" class="status-text"></div>
             </div>
         </div>
+
+        <style>
+            /* Khung chính */
+            .listening-card {
+                max-width: 500px;
+                margin: 30px auto;
+                padding: 25px;
+                background: #ffffff;
+                border-radius: 16px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                text-align: center;
+                font-family: "Segoe UI", sans-serif;
+            }
+
+            .title {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+            /* Khu vực hiển thị từ */
+            .word-section {
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column; /* Xếp theo chiều dọc */
+                align-items: center; /* Căn giữa ngang */
+                justify-content: center; /* Căn giữa dọc (nếu có chiều cao cố định) */
+                gap: 15px; /* Khoảng cách giữa các phần tử bên trong */
+            }
+
+            .word-box {
+                font-size: 48px;
+                font-weight: 700;
+                color: #1d4ed8;
+                background: linear-gradient(135deg, #dbeafe, #eff6ff);
+                padding: 25px 40px;
+                border-radius: 20px;
+                box-shadow: 0 8px 20px rgba(29, 78, 216, 0.2);
+                text-align: center;
+                transition: all 0.25s ease;
+            }
+
+                .word-box:hover {
+                    transform: scale(1.08);
+                    box-shadow: 0 10px 25px rgba(29, 78, 216, 0.3);
+                }
+
+
+            /* Nút hành động */
+            .action-btn {
+                margin: 6px;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                font-size: 15px;
+                cursor: pointer;
+                background-color: #2563eb;
+                color: white;
+                transition: background 0.3s, transform 0.2s;
+            }
+
+                .action-btn:hover {
+                    background-color: #1e40af;
+                    transform: translateY(-2px);
+                }
+
+                .action-btn:disabled {
+                    background-color: #9ca3af;
+                    cursor: not-allowed;
+                }
+
+            .start {
+                background-color: #10b981;
+            }
+
+                .start:hover {
+                    background-color: #059669;
+                }
+
+            .stop {
+                background-color: #ef4444;
+            }
+
+                .stop:hover {
+                    background-color: #dc2626;
+                }
+
+            /* Kết quả */
+            .result-box {
+                margin-top: 15px;
+                font-size: 16px;
+                font-weight: 500;
+                color: #111827;
+                background: #f9fafb;
+                border-radius: 10px;
+                padding: 10px;
+                display: block;
+            }
+
+            .status-text {
+                margin-top: 8px;
+                color: gray;
+                font-size: 14px;
+            }
+        </style>
 
         <!-- 🔵 TAB 3: VIẾT -->
         <div id="writing" class="tab">
@@ -72,7 +270,7 @@
 
             <!-- ---------- PHẦN OCR / UPLOAD ẢNH ---------- -->
             <div class="card" style="margin-top:16px;">
-                <h2>Nhận diện chữ viết tay (OCR)</h2>
+                <h2>Writing</h2>
 
                 <!-- Nếu bạn dùng ASP.NET MVC với antiforgery, giữ dòng @Html.AntiForgeryToken() -->
                 @* Nếu không dùng Razor, xóa dòng dưới *@
@@ -141,13 +339,72 @@
         <!-- 🧠 TAB 6: CHATBOT -->
         <div id="chatbot" class="tab">
             <div class="card">
-                <h2>Chatbot hội thoại</h2>
-                <div id="chatbox" class="chatbox">
-                    <p><b>Bot:</b> Hello! How are you?</p>
+                <h2>Chatbot hỗ trợ tiếng Anh</h2>
+                <p class="subtitle">Luyện tập giao tiếp tiếng Anh với trợ lý AI</p>
+
+                <!-- Chat Controls -->
+                <div class="chat-controls" style="margin-bottom: 15px;">
+                    <button class="action" onclick="clearChat()">🗑️ Xóa chat</button>
+                    <button class="action" onclick="exportChat()">📥 Xuất chat</button>
+                    <span id="messageCount" class="message-count">💬 0 tin nhắn</span>
                 </div>
-                <div class="chat-input-row">
-                    <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
-                    <button class="action" onclick="sendMessage()">Gửi</button>
+
+                <!-- User Info -->
+                <div class="user-info-card" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <h4>Thông tin người dùng</h4>
+                    <div class="user-info-form">
+                        <div style="display: flex; gap: 10px; align-items: end;">
+                            <div style="flex: 1;">
+                                <label for="username">Họ tên</label>
+                                <input type="text" id="username" placeholder="Nhập tên của bạn"
+                                       class="form-control" value="" />
+                            </div>
+                            <div style="flex: 1;">
+                                <label for="gender">Giới tính</label>
+                                <select id="gender" class="form-control">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Male">Nam</option>
+                                    <option value="Female">Nữ</option>
+                                    <option value="Other">Khác</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button class="action" onclick="updateUserInfo()">Cập nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chatMessages" class="chat-messages" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <div class="empty-chat" style="text-align: center; color: #666;">
+                        <div style="font-size: 48px;">💬</div>
+                        <h4>Chưa có tin nhắn nào</h4>
+                        <p>Gửi tin nhắn để bắt đầu trò chuyện!</p>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-form">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="chatInput"
+                               placeholder="Hỏi tôi bất cứ điều gì về tiếng Anh..."
+                               class="form-control" style="flex: 1;" />
+                        <button class="action" onclick="sendChatMessage()">
+                            <span>📤 Gửi</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Suggestions -->
+                <div class="chat-suggestions" style="margin-top: 15px;">
+                    <h5>💡 Thử hỏi:</h5>
+                    <div class="suggestion-chips" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="suggestion-chip" onclick="useSuggestion('Tôi có thể làm gì để cải thiện khả năng phát âm?')">Bí kíp phát âm</button>
+                        <button type="button" class="suggestion-chip" onclick="useSuggestion('Khác biệt giữa make và do là gì?')">Hỗ trợ ngữ pháp</button>
+                        <button type="button" class="suggestion-chip" onclick="useSuggestion('Bạn có thể cho tôi vài ví dụ để luyện tập giao tiếp không?')">Luyện tập giao tiếp</button>
+                        <button type="button" class="suggestion-chip" onclick="useSuggestion('Giải thích cho tôi về thì hiện tại đơn')">Giải thích thì</button>
+                    </div>
                 </div>
             </div>
         </div>
