@@ -1,0 +1,33 @@
+<div id="exam" class="tab">
+    <div class="card">
+        <h2>Bài thi</h2>
+
+        <div id="quizContainer">
+            <div id="quizHeader" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <div><strong>Câu <span id="questionNumber">0</span> / <span id="totalQuestions">10</span></strong></div>
+                <div id="quizTimer" style="color:#666; font-size:0.9em"></div>
+            </div>
+
+            <p id="examQuestion" style="font-weight:600; min-height:48px;">Nhấn "Bắt đầu" để bắt đầu bài thi.</p>
+
+            <div id="answerButtons" style="display:flex;flex-direction:column;gap:8px; margin-top:8px;">
+                <button class="action answer-btn" data-choice="A" onclick="selectAnswer('A')">A</button>
+                <button class="action answer-btn" data-choice="B" onclick="selectAnswer('B')">B</button>
+                <button class="action answer-btn" data-choice="C" onclick="selectAnswer('C')">C</button>
+                <button class="action answer-btn" data-choice="D" onclick="selectAnswer('D')">D</button>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+                <button id="startQuizBtn" class="action" onclick="startQuiz()">Bắt đầu</button>
+                <button id="nextBtn" class="action" onclick="nextQuestion()" style="display:none">Tiếp</button>
+                <div id="progressInfo" style="margin-left:12px;color:#666"></div>
+            </div>
+
+            <div id="quizResult" style="display:none; margin-top:14px;">
+                <h3>Kết quả</h3>
+                <p id="resultText"></p>
+                <button class="action" onclick="startQuiz()">Làm lại</button>
+            </div>
+        </div>
+    </div>
+</div>

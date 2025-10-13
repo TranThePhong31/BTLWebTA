@@ -1,0 +1,66 @@
+<div id="chatbot" class="tab">
+    <div class="card">
+        <h2>Chatbot hỗ trợ tiếng Anh</h2>
+        <p class="subtitle">Luyện tập giao tiếp tiếng Anh với trợ lý AI</p>
+
+        <div class="chat-controls">
+            <button class="action" onclick="clearChat()">🗑️ Xóa chat</button>
+            <button class="action" onclick="exportChat()">📥 Xuất chat</button>
+            <span id="messageCount" class="message-count">💬 0 tin nhắn</span>
+        </div>
+
+        <div class="user-info-card">
+            <h4>Thông tin người dùng</h4>
+            <div class="user-info-form">
+                <div style="display: flex; gap: 10px; align-items: end;">
+                    <div style="flex: 1;">
+                        <label for="username">Họ tên</label>
+                        <input type="text" id="username" placeholder="Nhập tên của bạn"
+                               class="form-control" value="" />
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="gender">Giới tính</label>
+                        <select id="gender" class="form-control">
+                            <option value="">Chọn giới tính</option>
+                            <option value="Male">Nam</option>
+                            <option value="Female">Nữ</option>
+                            <option value="Other">Khác</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button class="action" onclick="updateUserInfo()">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="chatMessages" class="chat-messages">
+            <div class="empty-chat">
+                <div style="font-size: 48px;">💬</div>
+                <h4>Chưa có tin nhắn nào</h4>
+                <p>Gửi tin nhắn để bắt đầu trò chuyện!</p>
+            </div>
+        </div>
+
+        <div class="chat-input-form">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="chatInput"
+                       placeholder="Hỏi tôi bất cứ điều gì về tiếng Anh..."
+                       class="form-control" style="flex: 1;" />
+                <button class="action" onclick="sendChatMessage()">
+                    <span>📤 Gửi</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-suggestions">
+            <h5>💡 Thử hỏi:</h5>
+            <div class="suggestion-chips">
+                <button type="button" class="suggestion-chip" onclick="useSuggestion('Tôi có thể làm gì để cải thiện khả năng phát âm?')">Bí kíp phát âm</button>
+                <button type="button" class="suggestion-chip" onclick="useSuggestion('Khác biệt giữa make và do là gì?')">Hỗ trợ ngữ pháp</button>
+                <button type="button" class="suggestion-chip" onclick="useSuggestion('Bạn có thể cho tôi vài ví dụ để luyện tập giao tiếp không?')">Luyện tập giao tiếp</button>
+                <button type="button" class="suggestion-chip" onclick="useSuggestion('Giải thích cho tôi về thì hiện tại đơn')">Giải thích thì</button>
+            </div>
+        </div>
+    </div>
+</div>

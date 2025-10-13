@@ -1,0 +1,20 @@
+<div id="writing" class="tab">
+    <div class="card" style="margin-top:16px;">
+        <h2>Writing</h2>
+
+        @Html.AntiForgeryToken()
+
+        <div style="display:flex;gap:12px;align-items:center;">
+            <input type="file" id="ocrFile" accept="image/*" />
+            <button id="btnOcr" class="action">🔍 Nhận diện</button>
+            <span id="ocrStatus" style="margin-left:8px;color:#666"></span>
+        </div>
+
+        <div id="previewContainer" style="margin-top:10px;">
+            <img id="previewImage" src="" alt="preview" style="max-width:100%; display:none; border:1px solid #ddd; padding:6px; border-radius:4px;" />
+        </div>
+
+        <h3 style="margin-top:12px">Kết quả</h3>
+        <pre id="ocrResult" style="white-space:pre-wrap; background:#fafafa; padding:12px; border-radius:6px; min-height:60px;"></pre>
+    </div>
+</div>  

@@ -1,0 +1,34 @@
+<!-- 🟢 TAB 1: TỪ VỰNG -->
+<div id="vocab" class="tab active">
+    <div class="card">
+        <h2>Flashcards của tôi</h2>
+
+        <!-- Flashcard Management -->
+        <div class="flashcards-management">
+            <button class="action" onclick="loadFlashcards(1)">🔄 Tải Flashcards</button>
+            <button class="action" onclick="startPractice()">📚 Bắt đầu luyện tập</button>
+
+            <div class="page-size-selector" style="display: inline-block; margin-left: 15px;">
+                <label for="pageSize">Hiển thị:</label>
+                <select id="pageSize" onchange="changePageSize(this.value)" style="margin-left: 5px; padding: 5px;">
+                    <option value="10">10 thẻ</option>
+                    <option value="20">20 thẻ</option>
+                    <option value="50">50 thẻ</option>
+                    <option value="100">100 thẻ</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="flashcardsGrid" class="flashcards-grid" style="display: none; margin-top: 20px;"></div>
+
+        <!-- Practice Section -->
+        <div id="practiceSection" style="display: none; margin-top: 20px;">
+            @await Html.PartialAsync("~/Views/Flashcards/Practice.cshtml")
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyFlashcards" class="empty-state" style="display: none; text-align: center; margin-top: 20px;">
+            <p>Chưa có flashcard nào. Hãy thêm từ mới để bắt đầu học!</p>
+        </div>
+    </div>
+</div>
