@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Admin Panel</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link active" data-module="dashboard">
+                        <span class="icon">📊</span> Dashboard
+                    </a></li>
+                    <li><a href="pages/user-list.html" class="nav-link" data-module="users">
+                        <span class="icon">👥</span> Quản lý User
+                    </a></li>
+                    <li><a href="pages/analytics.html" class="nav-link" data-module="analytics">
+                        <span class="icon">📈</span> Thống kê
+                    </a></li>
+                    <li><a href="pages/chat.html" class="nav-link" data-module="chat">
+                        <span class="icon">💬</span> Chat
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn">Đăng xuất</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">☰</button>
+                    <h2 class="page-title">Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <span class="user-name">Admin User</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <section class="dashboard-content">
+                <h1>Chào mừng đến Admin Panel</h1>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Tổng User</h3>
+                            <p class="stat-value" id="total-users">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>Đang hoạt động</h3>
+                            <p class="stat-value" id="active-users">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <h3>Bài học hoàn thành</h3>
+                            <p class="stat-value" id="completed-lessons">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏰</div>
+                        <div class="stat-info">
+                            <h3>Thời gian học (giờ)</h3>
+                            <p class="stat-value" id="total-hours">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-links">
+                    <a href="pages/user-list.html" class="btn btn-primary">Quản lý User</a>
+                    <a href="pages/analytics.html" class="btn btn-primary">Xem Thống kê</a>
+                    <a href="pages/chat.html" class="btn btn-primary">Chat Realtime</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/mock-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết User</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Admin Panel</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-link" data-module="dashboard">
+                        <span class="icon">📊</span> Dashboard
+                    </a></li>
+                    <li><a href="user-list.html" class="nav-link active" data-module="users">
+                        <span class="icon">👥</span> Quản lý User
+                    </a></li>
+                    <li><a href="analytics.html" class="nav-link" data-module="analytics">
+                        <span class="icon">📈</span> Thống kê
+                    </a></li>
+                    <li><a href="chat.html" class="nav-link" data-module="chat">
+                        <span class="icon">💬</span> Chat
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">☰</button>
+                    <h2 class="page-title">Chi tiết User</h2>
+                </div>
+            </header>
+
+            <!-- User Detail Content -->
+            <section class="content">
+                <div class="detail-container">
+                    <!-- User Info Card -->
+                    <div class="user-info-card">
+                        <button class="back-btn" onclick="history.back()">← Quay lại</button>
+                        
+                        <div class="user-header">
+                            <img id="userAvatar" src="https://via.placeholder.com/100" alt="Avatar" class="large-avatar">
+                            <div class="user-header-info">
+                                <h1 id="userName"></h1>
+                                <p id="userEmail"></p>
+                                <span id="userStatus" class="status-badge"></span>
+                            </div>
+                        </div>
+
+                        <div class="user-details">
+                            <div class="detail-row">
+                                <span class="detail-label">ID:</span>
+                                <span id="userId" class="detail-value"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Vai trò:</span>
+                                <span id="userRole" class="detail-value"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Ngày tạo:</span>
+                                <span id="userCreatedAt" class="detail-value"></span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Lần hoạt động cuối:</span>
+                                <span id="userLastActive" class="detail-value"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Progress -->
+                    <div class="progress-card">
+                        <h3>Tiến độ học tập</h3>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Hoàn thành bài học</span>
+                                <span id="lessonsPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="lessonsProgress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Tỷ lệ bài kiểm tra</span>
+                                <span id="quizPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="quizProgress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Khóa học hoàn thành</span>
+                                <span id="coursePercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="courseProgress" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity History -->
+                    <div class="activity-card">
+                        <h3>Lịch sử hoạt động</h3>
+                        <div id="activityList" class="activity-list">
+                            <!-- Sẽ được load bởi JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Chỉnh sửa</button>
+                        <button class="btn btn-warning">Reset Password</button>
+                        <button class="btn btn-danger">Khóa tài khoản</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/user-manager.js"></script>
+</body>
+</html>

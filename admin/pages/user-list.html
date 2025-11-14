@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý User</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Admin Panel</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-link" data-module="dashboard">
+                        <span class="icon">📊</span> Dashboard
+                    </a></li>
+                    <li><a href="user-list.html" class="nav-link active" data-module="users">
+                        <span class="icon">👥</span> Quản lý User
+                    </a></li>
+                    <li><a href="analytics.html" class="nav-link" data-module="analytics">
+                        <span class="icon">📈</span> Thống kê
+                    </a></li>
+                    <li><a href="chat.html" class="nav-link" data-module="chat">
+                        <span class="icon">💬</span> Chat
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn">Đăng xuất</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">☰</button>
+                    <h2 class="page-title">Quản lý User</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <span class="user-name">Admin User</span>
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- User Management Content -->
+            <section class="content">
+                <div class="filter-section">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Tìm kiếm theo tên, email, ID..."
+                            class="search-input"
+                        >
+                        <button class="search-btn">🔍</button>
+                    </div>
+
+                    <div class="filter-controls">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">-- Tất cả trạng thái --</option>
+                            <option value="active">Active</option>
+                            <option value="banned">Banned</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+
+                        <select id="roleFilter" class="filter-select">
+                            <option value="">-- Tất cả vai trò --</option>
+                            <option value="admin">Admin</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- User Table -->
+                <div class="table-container">
+                    <table id="userTable" class="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- Dữ liệu sẽ được load bởi JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button id="prevBtn" class="pagination-btn">← Trước</button>
+                    <div id="pageNumbers" class="page-numbers"></div>
+                    <button id="nextBtn" class="pagination-btn">Tiếp →</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for User Detail -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Chi tiết User</h2>
+            <div id="modalBody" class="modal-body">
+                <!-- Nội dung sẽ được load bởi JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Ban/Unban -->
+    <div id="actionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="actionTitle">Xác nhận hành động</h2>
+            <p id="actionMessage"></p>
+            <div class="modal-actions">
+                <button id="confirmBtn" class="btn btn-danger">Xác nhận</button>
+                <button id="cancelBtn" class="btn btn-secondary">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/user-manager.js"></script>
+</body>
+</html>

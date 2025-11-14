@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Realtime</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Admin Panel</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-link" data-module="dashboard">
+                        <span class="icon">📊</span> Dashboard
+                    </a></li>
+                    <li><a href="user-list.html" class="nav-link" data-module="users">
+                        <span class="icon">👥</span> Quản lý User
+                    </a></li>
+                    <li><a href="analytics.html" class="nav-link" data-module="analytics">
+                        <span class="icon">📈</span> Thống kê
+                    </a></li>
+                    <li><a href="chat.html" class="nav-link active" data-module="chat">
+                        <span class="icon">💬</span> Chat
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">☰</button>
+                    <h2 class="page-title">Chat Realtime</h2>
+                </div>
+            </header>
+
+            <!-- Chat Content -->
+            <section class="chat-container">
+                <!-- User List Sidebar -->
+                <aside class="chat-sidebar">
+                    <div class="chat-search">
+                        <input 
+                            type="text" 
+                            id="userSearchInput" 
+                            placeholder="Tìm người..."
+                            class="chat-search-input"
+                        >
+                    </div>
+                    <div class="user-list" id="userList">
+                        <!-- Sẽ được load bởi JavaScript -->
+                    </div>
+                </aside>
+
+                <!-- Chat Area -->
+                <div class="chat-area">
+                    <div class="chat-header">
+                        <div class="chat-user-info">
+                            <img id="chatUserAvatar" src="https://via.placeholder.com/40" alt="Avatar" class="chat-avatar">
+                            <div class="chat-user-details">
+                                <h3 id="chatUserName">Chọn một người để bắt đầu chat</h3>
+                                <span id="chatUserStatus" class="status-indicator"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Container -->
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-empty-state">
+                            <p>👋 Chọn một người để bắt đầu cuộc trò chuyện</p>
+                        </div>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="chat-input-area">
+                        <form id="messageForm" class="message-form">
+                            <input 
+                                type="text" 
+                                id="messageInput" 
+                                placeholder="Nhập tin nhắn..."
+                                class="message-input"
+                                disabled
+                            >
+                            <button type="submit" class="send-btn" disabled>Gửi</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/chat.js"></script>
+</body>
+</html>

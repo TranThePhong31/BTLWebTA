@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thống kê học tập</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Admin Panel</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="../index.html" class="nav-link" data-module="dashboard">
+                        <span class="icon">📊</span> Dashboard
+                    </a></li>
+                    <li><a href="user-list.html" class="nav-link" data-module="users">
+                        <span class="icon">👥</span> Quản lý User
+                    </a></li>
+                    <li><a href="analytics.html" class="nav-link active" data-module="analytics">
+                        <span class="icon">📈</span> Thống kê
+                    </a></li>
+                    <li><a href="chat.html" class="nav-link" data-module="chat">
+                        <span class="icon">💬</span> Chat
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle">☰</button>
+                    <h2 class="page-title">Thống kê học tập</h2>
+                </div>
+            </header>
+
+            <!-- Analytics Content -->
+            <section class="content">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Tổng User</h3>
+                            <p class="stat-value" id="stat-total-users">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>User Đang Hoạt Động</h3>
+                            <p class="stat-value" id="stat-active-users">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-info">
+                            <h3>Tổng Bài Học Hoàn Thành</h3>
+                            <p class="stat-value" id="stat-completed-lessons">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏰</div>
+                        <div class="stat-info">
+                            <h3>Giờ Học Trung Bình</h3>
+                            <p class="stat-value" id="stat-avg-hours">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Container -->
+                <div class="charts-grid">
+                    <!-- Chart 1: New Users by Day -->
+                    <div class="chart-card">
+                        <h3>User Mới Theo Ngày</h3>
+                        <canvas id="newUsersChart" width="400" height="250"></canvas>
+                    </div>
+
+                    <!-- Chart 2: Learning Completion Rate -->
+                    <div class="chart-card">
+                        <h3>Tỷ Lệ Hoàn Thành Trung Bình (%)</h3>
+                        <canvas id="completionChart" width="400" height="250"></canvas>
+                    </div>
+
+                    <!-- Chart 3: User Status Distribution -->
+                    <div class="chart-card">
+                        <h3>Phân Bố Trạng Thái User</h3>
+                        <canvas id="statusChart" width="400" height="250"></canvas>
+                    </div>
+
+                    <!-- Chart 4: Course Popularity -->
+                    <div class="chart-card">
+                        <h3>Khóa Học Phổ Biến Nhất</h3>
+                        <canvas id="courseChart" width="400" height="250"></canvas>
+                    </div>
+                </div>
+
+                <!-- Detailed Stats Table -->
+                <div class="table-container" style="margin-top: 30px;">
+                    <h3>Chi Tiết Học Tập Theo Vai Trò</h3>
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th>Vai Trò</th>
+                                <th>Số Lượng User</th>
+                                <th>Bài Học Trung Bình</th>
+                                <th>Giờ Học Trung Bình</th>
+                                <th>Tỷ Lệ Hoàn Thành</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statsTableBody">
+                            <!-- Sẽ được load bởi JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/analytics.js"></script>
+</body>
+</html>

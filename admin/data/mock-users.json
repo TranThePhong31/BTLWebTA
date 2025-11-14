@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Văn A",
+      "email": "nguyen.van.a@example.com",
+      "role": "student",
+      "status": "active",
+      "avatar": "https://i.pravatar.cc/150?img=1",
+      "createdAt": "2024-01-15",
+      "lastActive": "2024-11-14 10:30"
+    }
+  ]
+}
