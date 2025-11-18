@@ -1,0 +1,96 @@
+﻿@* Nếu partial có model, bạn đặt ở đây. 
+   Chưa có model thì để trống *@
+@* @model YourNamespace.Models.ChatRealtimeViewModel *@
+
+<div id="realtime-chat" class="tab">
+
+    <div class="card realtime-chat-card">
+
+        <!-- Header -->
+        <div class="chat-header-wrapper">
+            <h2>💬 Chat Realtime</h2>
+            <p class="subtitle">Trò chuyện realtime với cộng đồng học viên</p>
+        </div>
+
+        <!-- Main Container -->
+        <div class="realtime-chat-container">
+
+            <!-- Sidebar -->
+            <aside class="chat-users-sidebar">
+
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title">👥 Người dùng</h3>
+                </div>
+
+                <!-- Search -->
+                <div class="search-box-wrapper">
+                    <input type="text"
+                           id="userSearchInput"
+                           placeholder="🔍 Tìm người..."
+                           class="search-input" />
+                </div>
+
+                <!-- Users List -->
+                <div id="realtimeChatUsersList" class="users-list">
+                    <div class="loading-state">
+                        <p>⏳ Đang tải danh sách...</p>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- Chat Main Area -->
+            <div class="chat-main-area">
+
+                <!-- Selected User Header -->
+                <div class="chat-header-area">
+                    <div class="chat-user-info">
+
+                        <img id="selectedUserAvatar"
+                             src="https://via.placeholder.com/44"
+                             alt="Avatar"
+                             class="user-avatar" />
+
+                        <div class="user-details">
+                            <h4 id="selectedUserName">Chọn một người để chat</h4>
+                            <small id="selectedUserStatus" class="user-status-text">Offline</small>
+                        </div>
+                    </div>
+
+                    <div id="onlineIndicator" class="online-indicator offline"></div>
+                </div>
+
+                <!-- Messages -->
+                <div id="realtimeChatMessages" class="messages-area">
+                    <div class="empty-messages">
+                        <div class="empty-icon">👋</div>
+                        <p>Chọn một người để bắt đầu trò chuyện</p>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-wrapper">
+                    <form id="realtimeChatForm"
+                          onsubmit="sendRealtimeMessage(event)"
+                          class="message-form">
+                        <input type="text"
+                               id="realtimeMessageInput"
+                               class="message-input"
+                               placeholder="Nhập tin nhắn..."
+                               disabled />
+
+                        <button type="submit"
+                                id="realtimeSendBtn"
+                                class="send-btn"
+                                disabled>
+                            📤
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

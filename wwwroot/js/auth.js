@@ -2,25 +2,45 @@
 async function login() {
     const user = document.getElementById("loginUser").value.trim();
     const pass = document.getElementById("loginPass").value.trim();
+    
     if (!user || !pass) {
         alert("⚠️ Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");
         return;
     }
+
+    // 🟢 KIỂM TRA ADMIN
+    if (user === "admin" && pass === "123") {
+        alert("✅ Đăng nhập Admin thành công!");
+        sessionStorage.setItem("userName", "admin");
+        sessionStorage.setItem("userId", "admin");
+        sessionStorage.setItem("isAdmin", "true");
+        
+        // 🔴 CHUYỂN HƯỚNG ĐẾN ADMIN PANEL (từ wwwroot)
+        window.location.href = "/admin/index.html";
+        return;
+    }
+
+    // 🔵 ĐĂNG NHẬP THƯỜNG (GỬI ĐẾN SERVER)
     try {
         const body = { TenDangNhap: user, MatKhau: pass };
-        const { ok, data, res } = await window.__utils.fetchJson("/Auth/Login", {
+        const response = await fetch("/Auth/Login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
         });
-        if (!ok) {
-            alert("❌ " + (data.message || "Đăng nhập thất bại!"));
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            alert("❌ " + (result.message || "Đăng nhập thất bại!"));
             return;
         }
-        alert("✅ " + (data.message || "Đăng nhập thành công") + "\nXin chào " + data.user.TenDangNhap);
-        document.getElementById("userNameDisplay").textContent = data.user.TenDangNhap;
-        sessionStorage.setItem("userName", data.user.TenDangNhap);
-        sessionStorage.setItem("userId", data.user.MaNguoiDung);
+
+        alert("✅ " + (result.message || "Đăng nhập thành công") + "\nXin chào " + result.user.TenDangNhap);
+        document.getElementById("userNameDisplay").textContent = result.user.TenDangNhap;
+        sessionStorage.setItem("userName", result.user.TenDangNhap);
+        sessionStorage.setItem("userId", result.user.MaNguoiDung);
+        
         closeAuth();
     } catch (err) {
         console.error("Lỗi khi đăng nhập:", err);
@@ -37,7 +57,7 @@ async function register() {
         return;
     }
     try {
-        const { ok, data } = await window.__utils.fetchJson("https://localhost:7290/Auth/Register", {
+        const { ok, data } = await window.__utils.fetchJson("/Auth/Register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ TenDangNhap: username, Email: email, MatKhau: password })
@@ -65,6 +85,7 @@ function showAuth(type) {
     document.getElementById("loginForm").style.display = type === "login" ? "block" : "none";
     document.getElementById("registerForm").style.display = type === "register" ? "block" : "none";
 }
+
 function closeAuth() {
     const modal = document.getElementById("authModal");
     if (modal) modal.style.display = "none";

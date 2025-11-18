@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - English UTC</title>
     <link rel="stylesheet" href="~/css/style.css" />
     
+    <!-- Realtime Chat CSS -->
+    <link rel="stylesheet" href="~/css/realtime-chat.css" />
 </head>
 <body>
     <div class="layout-root">
@@ -25,7 +27,7 @@
                 @* <button onclick="openTab('reading')">📖 Đọc hiểu</button> *@
                 <button onclick="openTab('exam')">📝 Thi thử</button>
                 <button onclick="openTab('chatbot')">🤖 Chatbot</button>
-                <button onclick="openTab('progress')">📊 Tiến độ</button>
+                <button onclick="openTab('realtime-chat')">📊 Tư vấn</button>
             </nav>
         </header>
 
@@ -78,7 +80,12 @@
 <script src="~/js/practice.js"></script>
 <script src="~/js/chatbot.js"></script>
 <script src="~/js/init.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+    <!-- Realtime Chat JS -->
+    <script src="~/js/realtime-chat.js"></script>
 </body>
 </html>
+
 
 
