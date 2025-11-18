@@ -4,86 +4,277 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - English UTC</title>
+    <link rel="stylesheet" href="~/css/modern-layout.css" />
+    <link rel="stylesheet" href="~/css/modern-cards.css" />
     <link rel="stylesheet" href="~/css/style.css" />
-    
-    <!-- Realtime Chat CSS -->
+    <link rel="stylesheet" href="~/css/auth.css" />
     <link rel="stylesheet" href="~/css/realtime-chat.css" />
 </head>
 <body>
     <div class="layout-root">
-        <header>
-            <div class="header-container">
-                <h1>English UTC</h1>
-                <div class="auth">
-                    <button onclick="showAuth('login')">Đăng nhập</button>
-                    <span id="userNameDisplay" style="margin-left:10px; font-weight:bold;"></span>
-                    <button onclick="showAuth('register')">Đăng ký</button>
+        <!-- ===== HEADER MODERN ===== -->
+        <header class="modern-header">
+            <div class="header-top">
+                <div class="header-container">
+                    <!-- LOGO -->
+                    <div class="logo-section">
+                        <div class="logo-icon">🌍</div>
+                        <div class="logo-text">
+                            <h1>English UTC</h1>
+                            <p class="logo-subtitle">Luyện tập tiếng Anh thông minh</p>
+                        </div>
+                    </div>
+
+                    <!-- AUTH BUTTONS -->
+                    <div class="auth-buttons">
+                        <button onclick="showAuth('login')" class="btn-auth btn-login">
+                            <span class="icon">🔐</span>
+                            <span>Đăng nhập</span>
+                        </button>
+                        <span id="userNameDisplay" class="user-display"></span>
+                        <button onclick="showAuth('register')" class="btn-auth btn-register">
+                            <span class="icon">✨</span>
+                            <span>Đăng ký</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <nav>
-                <button onclick="openTab('vocab')" class="active">📚 Từ vựng</button>
-                <button onclick="openTab('listening')">🎧 Nghe & Nói</button>
-                <button onclick="openTab('writing')">✍️ Viết</button>
-                @* <button onclick="openTab('reading')">📖 Đọc hiểu</button> *@
-                <button onclick="openTab('exam')">📝 Thi thử</button>
-                <button onclick="openTab('chatbot')">🤖 Chatbot</button>
-                <button onclick="openTab('realtime-chat')">📊 Tư vấn</button>
+
+            <!-- NAVIGATION BAR -->
+            <nav class="modern-nav">
+                <div class="nav-container">
+                    <button onclick="openTab('vocab')" class="nav-btn active" data-tab="vocab">
+                        <span class="nav-icon">📚</span>
+                        <span>Từ vựng</span>
+                    </button>
+                    <button onclick="openTab('listening')" class="nav-btn" data-tab="listening">
+                        <span class="nav-icon">🎧</span>
+                        <span>Nghe & Nói</span>
+                    </button>
+                    <button onclick="openTab('writing')" class="nav-btn" data-tab="writing">
+                        <span class="nav-icon">✍️</span>
+                        <span>Viết</span>
+                    </button>
+                    <button onclick="openTab('exam')" class="nav-btn" data-tab="exam">
+                        <span class="nav-icon">📝</span>
+                        <span>Thi thử</span>
+                    </button>
+                    <button onclick="openTab('chatbot')" class="nav-btn" data-tab="chatbot">
+                        <span class="nav-icon">🤖</span>
+                        <span>Chatbot</span>
+                    </button>
+                    <button onclick="openTab('realtime-chat')" class="nav-btn" data-tab="realtime-chat">
+                        <span class="nav-icon">💬</span>
+                        <span>Tư vấn</span>
+                    </button>
+                </div>
             </nav>
         </header>
 
-        <main>
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="modern-main">
             @RenderBody()
         </main>
 
-        <!-- Modal đăng nhập/đăng ký -->
-        <div id="authModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeAuth()">&times;</span>
-                <div id="loginForm" style="display:none;">
-                    <h2>Đăng nhập</h2>
-                    <input type="text" id="loginUser" placeholder="Tên đăng nhập"><br>
-                    <input type="password" id="loginPass" placeholder="Mật khẩu"><br>
-                    <button onclick="login()">Đăng nhập</button>
+        <!-- ===== MODERN AUTH MODAL ===== -->
+        <div id="authModal" class="auth-modal">
+            <div class="auth-modal-overlay" onclick="closeAuth()"></div>
+            
+            <div class="auth-modal-content">
+                <button class="auth-close-btn" onclick="closeAuth()">✕</button>
+                
+                <!-- TAB TOGGLE -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="switchAuthTab('login')">
+                        🔐 Đăng Nhập
+                    </button>
+                    <button class="auth-tab-btn" onclick="switchAuthTab('register')">
+                        ✨ Đăng Ký
+                    </button>
                 </div>
-            <div id="registerForm" style="display:none;">
-                <h2>Đăng ký</h2>
 
-                <input type="text" id="regUser" placeholder="Tên đăng nhập"><br>
-                <input type="email" id="regEmail" placeholder="Email"><br>
-                <input type="password" id="regPass" placeholder="Mật khẩu"><br>
+                <!-- ===== LOGIN FORM ===== -->
+                <div id="loginForm" class="auth-form active">
+                    <div class="auth-header">
+                        <h2>Chào mừng trở lại</h2>
+                        <p>Đăng nhập để tiếp tục học tập</p>
+                    </div>
 
-                <button onclick="register()">Đăng ký</button>
-            </div>
+                    <form onsubmit="login(event)" class="form-group">
+                        <div class="form-input-group">
+                            <label for="loginUser" class="form-label">Tên đăng nhập</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input 
+                                    type="text" 
+                                    id="loginUser" 
+                                    class="form-input"
+                                    placeholder="Nhập tên đăng nhập"
+                                    required />
+                            </div>
+                        </div>
 
+                        <div class="form-input-group">
+                            <label for="loginPass" class="form-label">Mật khẩu</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input 
+                                    type="password" 
+                                    id="loginPass" 
+                                    class="form-input"
+                                    placeholder="Nhập mật khẩu"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div class="form-remember">
+                            <input type="checkbox" id="rememberMe" class="checkbox">
+                            <label for="rememberMe">Ghi nhớ đăng nhập</label>
+                        </div>
+
+                        <button type="button" onclick="login()" class="btn-submit btn-login-submit">
+                            🔐 Đăng Nhập
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Chưa có tài khoản? 
+                            <a href="#" onclick="switchAuthTab('register'); return false;" class="auth-link">
+                                Đăng ký ngay
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ===== REGISTER FORM ===== -->
+                <div id="registerForm" class="auth-form">
+                    <div class="auth-header">
+                        <h2>Tạo tài khoản mới</h2>
+                        <p>Bắt đầu hành trình học tiếng Anh của bạn</p>
+                    </div>
+
+                    <form onsubmit="register(event)" class="form-group">
+                        <div class="form-input-group">
+                            <label for="regUser" class="form-label">Tên đăng nhập</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input 
+                                    type="text" 
+                                    id="regUser" 
+                                    class="form-input"
+                                    placeholder="Chọn tên đăng nhập"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div class="form-input-group">
+                            <label for="regEmail" class="form-label">Email</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">📧</span>
+                                <input 
+                                    type="email" 
+                                    id="regEmail" 
+                                    class="form-input"
+                                    placeholder="Email của bạn"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div class="form-input-group">
+                            <label for="regPass" class="form-label">Mật khẩu</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input 
+                                    type="password" 
+                                    id="regPass" 
+                                    class="form-input"
+                                    placeholder="Tạo mật khẩu mạnh"
+                                    required />
+                            </div>
+                        </div>
+
+                        <div class="form-terms">
+                            <input type="checkbox" id="agreeTerms" class="checkbox" required>
+                            <label for="agreeTerms">
+                                Tôi đồng ý với 
+                                <a href="#" class="auth-link">Điều khoản dịch vụ</a>
+                            </label>
+                        </div>
+
+                        <button type="button" onclick="register()" class="btn-submit btn-register-submit">
+                            ✨ Đăng Ký
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Đã có tài khoản? 
+                            <a href="#" onclick="switchAuthTab('login'); return false;" class="auth-link">
+                                Đăng nhập
+                            </a>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <footer>
+        <!-- ===== FOOTER MODERN ===== -->
+        <footer class="modern-footer">
             <div class="footer-content">
-                <p><b>Liên hệ:</b></p>
-                <p>Email: UTC@hoctienganh.com</p>
-                <p>Hotline: 0123 456 789</p>
-                <p>Địa chỉ: Đại học giao thông vận tải</p>
-                <p>&copy;Ứng dụng học ngoại ngữ thông minh</p>
+                <div class="footer-section">
+                    <h4>📧 Liên hệ</h4>
+                    <p>Email: <a href="mailto:UTC@hoctienganh.com">UTC@hoctienganh.com</a></p>
+                    <p>Hotline: <a href="tel:+84123456789">0123 456 789</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>📍 Địa chỉ</h4>
+                    <p>Đại học Giao Thông Vận Tải</p>
+                    <p>Hà Nội, Việt Nam</p>
+                </div>
+                <div class="footer-section">
+                    <h4>🔗 Liên kết</h4>
+                    <ul>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Chính sách</a></li>
+                        <li><a href="#">Trợ giúp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 English UTC - Ứng dụng học tiếng Anh thông minh</p>
             </div>
         </footer>
     </div>
 
-    @* <script src="~/js/main.js"></script> *@
+    <!-- Scripts -->
     <script src="~/js/utils.js"></script>
-<script src="~/js/ui/tabs.js"></script>
-<script src="~/js/auth.js"></script>
-<script src="~/js/speech.js"></script>
-<script src="~/js/ocr.js"></script>
-<script src="~/js/quiz.js"></script>
-<script src="~/js/flashcards.js"></script>
-<script src="~/js/practice.js"></script>
-<script src="~/js/chatbot.js"></script>
-<script src="~/js/init.js"></script>
+    <script src="~/js/ui/tabs.js"></script>
+    <script src="~/js/auth.js"></script>
+    <script src="~/js/speech.js"></script>
+    <script src="~/js/ocr.js"></script>
+    <script src="~/js/quiz.js"></script>
+    <script src="~/js/flashcards.js"></script>
+    <script src="~/js/practice.js"></script>
+    <script src="~/js/chatbot.js"></script>
+    <script src="~/js/init.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-    
-    <!-- Realtime Chat JS -->
     <script src="~/js/realtime-chat.js"></script>
+
+    <!-- Auth UI Script -->
+    <script>
+        function switchAuthTab(tab) {
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.querySelectorAll('.auth-tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+                document.querySelectorAll('.auth-tab-btn')[0].classList.add('active');
+            } else {
+                document.getElementById('registerForm').classList.add('active');
+                document.querySelectorAll('.auth-tab-btn')[1].classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
 
