@@ -4,6 +4,8 @@ using Project1.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
+Console.WriteLine("=== CONNECTION STRING ===");
+Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 // ----------------------
 // CẤU HÌNH DỊCH VỤ
